@@ -1,0 +1,137 @@
+{
+	"name": "evohelper",
+	"displayName": "EvoHelper",
+	"description": "VS Code Extension for supporting software maintenance and evolution",
+	"version": "0.0.1",
+	"engines": {
+		"vscode": "^1.64.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onView:definition",
+		"onView:evoHelperWebView.main"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"viewsContainers": {
+			"activitybar": [
+				{
+					"id": "EvoHelper",
+					"title": "EvoHelper",
+					"icon": "media/Logo.png"
+				}
+			]
+		},
+		"views": {
+			"EvoHelper": [
+				{
+					"id": "definition",
+					"name": "Definition",
+					"contextualTitle": "Definition"
+				},
+				{
+					"id": "references",
+					"name": "References",
+					"contextualTitle": "References"
+				},
+				{
+					"type": "webview",
+					"id": "evoHelperWebView.main",
+					"name": "To Be Check / Changed Items",
+					"contextualTitle": "To Be Check / Changed Items"
+				}
+			]
+		},
+		"menus": {
+			"view/title": [
+				{
+					"command": "references.refreshEntry",
+					"when": "view == definition",
+					"group": "navigation"
+				}
+			],
+			"editor/context": [
+				{
+					"command": "references.refreshEntry",
+					"group": "myGroup@1"
+				},
+				{
+					"command": "toBeChanged.add_from_context",
+					"group": "myGroup@2"
+				},
+				{
+					"command": "toBeChanged.add_from_contex_prop",
+					"group": "myGroup@3"
+				}
+			],
+			"view/item/context": [
+				{
+					"command": "references.gotoReference",
+					"when": "view == references || view == definition || view == toBeChanged || view == toBeChecked && viewItem == referenceToBeChecked || viewItem == reference"
+				},
+				{
+					"command": "toBeChanged.add",
+					"when": "view == definition && viewItem == reference",
+					"group": "inline"
+				}
+			]
+		},
+		"commands": [
+			{
+				"command": "references.refreshEntry",
+				"title": "Search item",
+				"icon": {
+					"light": "resources/light/refresh.svg",
+					"dark": "resources/dark/refresh.svg"
+				}
+			},
+			{
+				"command": "references.gotoReference",
+				"title": "Go To"
+			},
+			{
+				"command": "toBeChanged.add",
+				"title": "Add",
+				"icon": {
+					"light": "resources/light/Add.svg",
+					"dark": "resources/dark/Add.svg"
+				}
+			},
+			{
+				"command": "toBeChanged.add_from_context",
+				"title": "Add As Impacted"
+			},
+			{
+				"command": "toBeChanged.add_from_contex_prop",
+				"title": "Add As Propagating"
+			}
+		]
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"pretest": "npm run compile && npm run lint",
+		"lint": "eslint src --ext ts",
+		"test": "node ./out/test/runTest.js"
+	},
+	"devDependencies": {
+		"@types/vscode": "^1.64.0",
+		"@types/glob": "^7.2.0",
+		"@types/mocha": "^9.0.0",
+		"@types/node": "14.x",
+		"@typescript-eslint/eslint-plugin": "^5.9.1",
+		"@typescript-eslint/parser": "^5.9.1",
+		"eslint": "^8.6.0",
+		"glob": "^7.2.0",
+		"mocha": "^9.1.3",
+		"typescript": "^4.5.4",
+		"@vscode/test-electron": "^2.0.3"
+	},
+	"dependencies": {
+		"@vscode/webview-ui-toolkit": "^0.9.1",
+		"jquery": "^3.6.0"
+	}
+}
