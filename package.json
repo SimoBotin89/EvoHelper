@@ -39,8 +39,8 @@
 				{
 					"type": "webview",
 					"id": "evoHelperWebView.main",
-					"name": "To Be Check / Changed Items",
-					"contextualTitle": "To Be Check / Changed Items"
+					"name": "To Be Checked / Changed Items",
+					"contextualTitle": "To Be Checked / Changed Items"
 				}
 			]
 		},
